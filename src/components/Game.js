@@ -65,6 +65,16 @@ export default class Game extends Component {
         return renderedWord;
     }
 
+    handleNewGame = (e) => {
+        // this.setState(this.initialState());
+        // this.initialRender();
+        // setTimeout(() => {this.initialRender()}, 1000)
+
+        this.setState(this.initialState(), () => {
+            this.initialRender();
+        })
+    }
+
     render() {
         let usedLetters;
         if (this.state.lettersGuessed.length > 0)
@@ -93,6 +103,10 @@ export default class Game extends Component {
                         <br></br>
                         {/* <button onClick={this.handleSubmit}>Submit</button> */}
                     </form>
+                </div>
+                <div className="newgame-button-container">
+                    <button className="newgame-button" onClick={this.handleNewGame}>New Game</button>
+                    <button className="options-button" onClick={this.handleOptions}>Options</button>
                 </div>
             </>
         )
