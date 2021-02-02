@@ -1,6 +1,4 @@
 body{
-  /* background: rgb(236, 232, 232); */
-  /* height: 100%; */
   background: rgb(236, 232, 232);
   position: absolute;
   height: 100vh;
@@ -13,13 +11,11 @@ body{
 .App {
   text-align: center;
   background: rgb(236, 232, 232);
-  /* height: 100%;  */
 }
 
 .title{
   color:white;
   font-size: larger;
-  /* margin-top: 20px; */
 }
 
 .snowman-container{

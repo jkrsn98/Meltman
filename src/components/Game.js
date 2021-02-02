@@ -61,15 +61,10 @@ export default class Game extends Component {
         }
         let renderedWord = this.state.renderedWord;
         indices.forEach(idx => { renderedWord[idx] = ` ${letter} ` })
-        // this.setState({ renderedWord })
         return renderedWord;
     }
 
     handleNewGame = (e) => {
-        // this.setState(this.initialState());
-        // this.initialRender();
-        // setTimeout(() => {this.initialRender()}, 1000)
-
         this.setState(this.initialState(), () => {
             this.initialRender();
         })
@@ -101,7 +96,6 @@ export default class Game extends Component {
 
                         </input>
                         <br></br>
-                        {/* <button onClick={this.handleSubmit}>Submit</button> */}
                     </form>
                 </div>
                 <div className="newgame-button-container">
