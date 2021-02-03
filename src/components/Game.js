@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Snowman from "./Snowman";
 import randomWords from "../services/randomWords.js";
+import Keyboard from 'react-simple-keyboard';
+import "react-simple-keyboard/build/css/index.css";
 
 export default class Game extends Component {
     constructor() {
@@ -97,6 +99,12 @@ export default class Game extends Component {
                         </input>
                         <br></br>
                     </form>
+                </div>
+                <div className="keyboard-container">
+                    <Keyboard
+                        onChange={this.onChange}
+                        onKeyPress={this.onKeyPress}
+                    />
                 </div>
                 <div className="newgame-button-container">
                     <button className="newgame-button" onClick={this.handleNewGame}>New Game</button>
