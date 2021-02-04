@@ -72,6 +72,13 @@ export default class Game extends Component {
         })
     }
 
+    onKeyPress = (button) => {
+        console.log("Button pressed", button);
+        const input = (this.state.image < 6) ? button.toLowerCase() : "";
+        this.setState({ input })
+        this.handleSubmit();
+    }
+
     render() {
         let usedLetters;
         if (this.state.lettersGuessed.length > 0)
