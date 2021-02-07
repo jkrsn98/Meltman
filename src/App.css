@@ -60,3 +60,13 @@ body{
 .options-button{
   font-size: 26px;
 }
+
+.keyboard-container{
+  margin: 0 auto;
+  max-width:800px;
+  min-width: none;
+}
+.usedLetter{
+  opacity: 30%;
+  pointer-events: none;
+}

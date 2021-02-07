@@ -108,9 +108,28 @@ export default class Game extends Component {
                     </form>
                 </div>
                 <div className="keyboard-container">
-                    <Keyboard
+                <Keyboard
                         onChange={this.onChange}
                         onKeyPress={this.onKeyPress}
+                        layout={{
+                            default: [
+                                "A B C D E F G H I",
+                                "J K L M N O P Q R",
+                                "S T U V W X Y Z",
+                            ]
+                        }}
+                        theme={"hg-theme-default"}
+                        buttonAttributes={[{
+                            attribute: "style",
+                            value: "fontSize: '100px' ",
+                            buttons: "B"
+                        }]}
+                        buttonTheme={[
+                            {
+                                class: "usedLetter",
+                                buttons: usedLetters,
+                            }
+                        ]}
                     />
                 </div>
                 <div className="newgame-button-container">
