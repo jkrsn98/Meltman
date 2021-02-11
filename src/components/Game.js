@@ -87,6 +87,44 @@ export default class Game extends Component {
         console.log(this.state.word);
         return (
             <>
+                <div class="snowflakes" aria-hidden="true">
+                    <div class="snowflake">
+                        ❅
+  </div>
+                    <div class="snowflake">
+                        ❆
+  </div>
+                    <div class="snowflake">
+                        ❅
+  </div>
+                    <div class="snowflake">
+                        ❆
+  </div>
+                    <div class="snowflake">
+                        ❅
+  </div>
+                    <div class="snowflake">
+                        ❆
+  </div>
+                    <div class="snowflake">
+                        ❅
+  </div>
+                    <div class="snowflake">
+                        ❆
+  </div>
+                    <div class="snowflake">
+                        ❅
+  </div>
+                    <div class="snowflake">
+                        ❆
+  </div>
+                    <div class="snowflake">
+                        ❅
+  </div>
+                    <div class="snowflake">
+                        ❆
+  </div>
+                </div>
                 <div className="title">
                     <h1>M E  L  T  M  A  N</h1>
                 </div>
@@ -108,7 +146,7 @@ export default class Game extends Component {
                     </form>
                 </div>
                 <div className="keyboard-container">
-                <Keyboard
+                    <Keyboard
                         onChange={this.onChange}
                         onKeyPress={this.onKeyPress}
                         layout={{
