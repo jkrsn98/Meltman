@@ -3,6 +3,7 @@ import Snowman from "./Snowman";
 import randomWords from "../services/randomWords.js";
 import Keyboard from 'react-simple-keyboard';
 import "react-simple-keyboard/build/css/index.css";
+import Snowflakes from "../assets/effects/snowflakes.jsx"
 
 export default class Game extends Component {
     constructor() {
@@ -87,44 +88,7 @@ export default class Game extends Component {
         console.log(this.state.word);
         return (
             <>
-                <div class="snowflakes" aria-hidden="true">
-                    <div class="snowflake">
-                        ❅
-  </div>
-                    <div class="snowflake">
-                        ❆
-  </div>
-                    <div class="snowflake">
-                        ❅
-  </div>
-                    <div class="snowflake">
-                        ❆
-  </div>
-                    <div class="snowflake">
-                        ❅
-  </div>
-                    <div class="snowflake">
-                        ❆
-  </div>
-                    <div class="snowflake">
-                        ❅
-  </div>
-                    <div class="snowflake">
-                        ❆
-  </div>
-                    <div class="snowflake">
-                        ❅
-  </div>
-                    <div class="snowflake">
-                        ❆
-  </div>
-                    <div class="snowflake">
-                        ❅
-  </div>
-                    <div class="snowflake">
-                        ❆
-  </div>
-                </div>
+                <Snowflakes />
                 <div className="title">
                     <h1>M E  L  T  M  A  N</h1>
                 </div>
