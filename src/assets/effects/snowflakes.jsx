@@ -2,20 +2,10 @@ import React from 'react'
 import './snowflakes.css';
 
 export default function snowflakes() {
+    const snowflakes = ['❅','❆','❅','❆','❅','❆','❅','❆','❅','❆','❅','❆'];
     return (
         <div class="snowflakes" aria-hidden="true">
-            <div class="snowflake">❅</div>
-            <div class="snowflake">❆</div>
-            <div class="snowflake">❅</div>
-            <div class="snowflake">❆</div>
-            <div class="snowflake">❅</div>
-            <div class="snowflake">❆</div>
-            <div class="snowflake">❅</div>
-            <div class="snowflake">❆</div>
-            <div class="snowflake">❅</div>
-            <div class="snowflake">❆</div>
-            <div class="snowflake">❅</div>
-            <div class="snowflake">❆</div>
+            {snowflakes.map( (s) => (<div class="snowflake">{s}</div>))}
         </div>
     )
 }
