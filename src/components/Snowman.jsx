@@ -14,7 +14,7 @@ function Snowman(props) {
     return (
         <div className="snowman">
             <img src={imageArr[props.image-1]} />
-            {props.image>5?<p>melted</p>:<p></p>}
+            {/* {props.image>5?<p>melted</p>:<p></p>} */}
         </div>
     )
 }

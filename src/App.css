@@ -70,3 +70,8 @@ body{
   opacity: 30%;
   pointer-events: none;
 }
+
+
+.clickable {
+  cursor:pointer;
+}

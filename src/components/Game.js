@@ -4,6 +4,8 @@ import randomWords from "../services/randomWords.js";
 import Keyboard from 'react-simple-keyboard';
 import "react-simple-keyboard/build/css/index.css";
 import Snowflakes from "../assets/effects/snowflakes.jsx"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSnowflake } from '@fortawesome/free-solid-svg-icons'
 
 export default class Game extends Component {
     constructor() {
@@ -18,6 +20,7 @@ export default class Game extends Component {
             lettersLeft: [],
             renderedWord: [],
             image: 1,
+            snow: true
         })
     }
 
@@ -80,6 +83,11 @@ export default class Game extends Component {
         this.handleSubmit();
     }
 
+    handleSnowEffect = () =>{
+        const snow = !this.state.snow;
+        this.setState({snow});
+    }
+
     render() {
         let usedLetters;
         if (this.state.lettersGuessed.length > 0)
@@ -88,9 +96,9 @@ export default class Game extends Component {
         console.log(this.state.word);
         return (
             <>
-                <Snowflakes />
+                {this.state.snow===true?<Snowflakes />: ''}
                 <div className="title">
-                    <h1>M E  L  T  M  A  N</h1>
+                    {this.state.image===6?<h1>Game Over</h1>:<h1>M E  L  T  M  A  N</h1>}
                 </div>
                 <div className="snowman-container">
                     <Snowman image={this.state.image} word={this.state.word} />
@@ -136,7 +144,8 @@ export default class Game extends Component {
                 </div>
                 <div className="newgame-button-container">
                     <button className="newgame-button" onClick={this.handleNewGame}>New Game</button>
-                    <button className="options-button" onClick={this.handleOptions}>Options</button>
+                    {/* <button className="options-button" onClick={this.handleOptions}>Options</button> */}
+                    <FontAwesomeIcon icon={faSnowflake} size="3x" onClick={this.handleSnowEffect} className="clickable"/>
                 </div>
             </>
         )
