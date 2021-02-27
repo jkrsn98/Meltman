@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import Snowman from "./Snowman";
 import randomWords from "../services/randomWords.js";
-import Keyboard from 'react-simple-keyboard';
-import "react-simple-keyboard/build/css/index.css";
+// import Keyboard from 'react-simple-keyboard';
+// import "react-simple-keyboard/build/css/index.css";
 import Snowflakes from "../assets/effects/snowflakes.jsx"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSnowflake } from '@fortawesome/free-solid-svg-icons'
+// import useSound from 'use-sound';
+// import click from "../assets/audio/click.mp3";
+import MyKeyboard from "./Keyboard"
 
 export default class Game extends Component {
     constructor() {
@@ -20,7 +23,8 @@ export default class Game extends Component {
             lettersLeft: [],
             renderedWord: [],
             image: 1,
-            snow: true
+            snow: true,
+            newgame: false
         })
     }
 
@@ -88,6 +92,11 @@ export default class Game extends Component {
         this.setState({snow});
     }
 
+    allowSound = () =>{
+        if(this.state.image===6) return true;
+        else return false;
+    }
+
     render() {
         let usedLetters;
         if (this.state.lettersGuessed.length > 0)
@@ -118,29 +127,7 @@ export default class Game extends Component {
                     </form>
                 </div>
                 <div className="keyboard-container">
-                    <Keyboard
-                        onChange={this.onChange}
-                        onKeyPress={this.onKeyPress}
-                        layout={{
-                            default: [
-                                "A B C D E F G H I",
-                                "J K L M N O P Q R",
-                                "S T U V W X Y Z",
-                            ]
-                        }}
-                        theme={"hg-theme-default"}
-                        buttonAttributes={[{
-                            attribute: "style",
-                            value: "fontSize: '100px' ",
-                            buttons: "B"
-                        }]}
-                        buttonTheme={[
-                            {
-                                class: "usedLetter",
-                                buttons: usedLetters,
-                            }
-                        ]}
-                    />
+                    <MyKeyboard onKeyPress={this.onKeyPress} usedLetters={usedLetters} image={this.state.image}/>
                 </div>
                 <div className="newgame-button-container">
                     <button className="newgame-button" onClick={this.handleNewGame}>New Game</button>
