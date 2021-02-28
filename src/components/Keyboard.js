@@ -34,16 +34,13 @@ export default function MyKeyboard(props) {
     )
 
     let handleSound = () => {
-        if (played == true && props.image === 1) setPlayed(false);
+        if(props.sound==true){
+            if (played == true && props.image === 1) setPlayed(false);
 
-        if (props.image <= 5 && props.clickable === true)
-            return playActive;
-        // else if ( (props.image>0 && props.image<6) && played == false)
-        //     return playWin;
-        // else if (props.image === 6 && played == false)
-        //     return playGameOver;
-        else return;
-
+            if (props.image <= 5 && props.clickable === true)
+                return playActive;
+            else return;
+        }
     }
 
     return (

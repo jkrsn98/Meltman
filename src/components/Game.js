@@ -3,14 +3,25 @@ import Snowman from "./Snowman";
 import randomWords from "../services/randomWords.js";
 import Snowflakes from "../assets/effects/snowflakes.jsx"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSnowflake } from '@fortawesome/free-solid-svg-icons'
+import { faSnowflake, faVolumeMute, faVolumeUp, faRedo } from '@fortawesome/free-solid-svg-icons'
+import { faCircle } from '@fortawesome/free-regular-svg-icons'
+
 import MyKeyboard from "./Keyboard"
 import Sounder from "./Sounder"
 
 export default class Game extends Component {
     constructor() {
         super();
-        this.state = this.initialState();
+        this.state = ({
+            word: randomWords(),
+            input: "",
+            lettersGuessed: [],
+            renderedWord: [],
+            image: 1,
+            snow: true,
+            keySound: true,
+            sound: true
+        })
     }
     initialState = () => {
         return ({
@@ -19,8 +30,7 @@ export default class Game extends Component {
             lettersGuessed: [],
             renderedWord: [],
             image: 1,
-            snow: true,
-            keySound: true
+            keySound: true,
         })
     }
 
@@ -46,54 +56,57 @@ export default class Game extends Component {
             idx = word.indexOf(letter, idx + 1);
         }
         let renderedWord = this.state.renderedWord;
-        if(renderedWord.indexOf(" _ ")===-1) this.setState({keySound:false});
+        if (renderedWord.indexOf(" _ ") === -1) this.setState({ keySound: false });
         indices.forEach(idx => { renderedWord[idx] = ` ${letter} ` })
         return renderedWord;
-        
+
     }
 
-    
+
     onKeyPress = (letter) => {
-        if(this.state.renderedWord.indexOf(" _ ")!==-1){
+        if (this.state.renderedWord.indexOf(" _ ") !== -1) {
             const input = (this.state.image < 6) ? letter.toLowerCase() : "";
             let lettersGuessed = this.state.lettersGuessed;
             if (lettersGuessed.indexOf(input) === -1 && this.state.image != 6)
-            lettersGuessed.push(input);
+                lettersGuessed.push(input);
             else
                 return;
-            this.setState({ renderedWord: this.renderWord(input), lettersGuessed: lettersGuessed})
+            this.setState({ renderedWord: this.renderWord(input), lettersGuessed: lettersGuessed })
         }
-        else this.forceUpdate(this.setState({keySound:false}));
-        
+        else this.forceUpdate(this.setState({ keySound: false }));
+
         console.log(this.state.renderedWord);
-        
+
     }
-    
+
     handleNewGame = (e) => {
         this.setState(this.initialState(), () => {
             this.initialRender();
         })
     }
 
-    handleSnowEffect = () =>{
-        const snow = !this.state.snow;
-        this.setState({snow});
+    handleSnowEffect = () => {
+        this.setState({ snow: !this.state.snow });
+    }
+
+    handleSound = () => {
+        this.setState({ sound: !this.state.sound })
     }
 
     render() {
         console.log(this.state.word);
-        const playSound = () =>{
-            if((this.state.renderedWord.indexOf(" _ ") === -1))
-                return <Sounder toPlay={"win"} />
-            else if((this.state.image==6))
-                return <Sounder toPlay={"lose"} />
+        const playSound = () => {
+            if ((this.state.renderedWord.indexOf(" _ ") === -1))
+                return <Sounder toPlay={"win"} sound={this.state.sound} />
+            else if ((this.state.image == 6))
+                return <Sounder toPlay={"lose"} sound={this.state.sound} />
         }
         return (
             <>
-                {this.state.snow===true?<Snowflakes />: ''}
+                {this.state.snow === true ? <Snowflakes /> : ''}
                 {playSound()}
                 <div className="title">
-                    {this.state.image===6?<h1>Game Over</h1>:<h1>M E  L  T  M  A  N</h1>}
+                    <h1>M E  L  T  M  A  N</h1>
                 </div>
                 <div className="snowman-container">
                     <Snowman image={this.state.image} word={this.state.word} />
@@ -105,12 +118,16 @@ export default class Game extends Component {
                     {this.state.lettersGuessed.join(' ')}
                 </div>
                 <div className="keyboard-container">
-                    <MyKeyboard onKeyPress={this.onKeyPress} usedLetters={this.state.lettersGuessed} image={this.state.image} clickable={this.state.keySound}/>
+                    <MyKeyboard onKeyPress={this.onKeyPress} usedLetters={this.state.lettersGuessed} image={this.state.image} clickable={this.state.keySound} sound={this.state.sound} />
                 </div>
                 <div className="newgame-button-container">
-                    <button className="newgame-button" onClick={this.handleNewGame}>New Game</button>
-                    <FontAwesomeIcon icon={faSnowflake} size="3x" onClick={this.handleSnowEffect} className="clickable"/>
+                    <FontAwesomeIcon icon={faRedo} size="3x" onClick={this.handleNewGame} className="clickable" />
                 </div>
+                <div className="effect-button-container">
+                    {this.state.snow === true ? <FontAwesomeIcon icon={faSnowflake} size="3x" onClick={this.handleSnowEffect} className="clickable" /> : <FontAwesomeIcon icon={faCircle} size="3x" onClick={this.handleSnowEffect} className="clickable" />}
+                    {this.state.sound == true ? <FontAwesomeIcon icon={faVolumeUp} size="3x" onClick={this.handleSound} className="clickable" /> : <FontAwesomeIcon icon={faVolumeMute} size="3x" onClick={this.handleSound} className="clickable" />}
+                </div>
+
             </>
         )
     }

@@ -15,13 +15,13 @@ export default function Sounder(props) {
     const handleSongFinishedPlaying = () => {
         setPlayed(true);
     }
-    
+
     const renderSound = () => {
-        if (played === false) {
+        if (played === false && props.sound===true) {
             return (
                 <Sound
                     url={url()}
-                    playStatus={Sound.status.PLAYING}
+                    playStatus={(props.sound===true)?Sound.status.PLAYING:Sound.status.PAUSED}
                     onFinishedPlaying={handleSongFinishedPlaying}
                 />
             )
