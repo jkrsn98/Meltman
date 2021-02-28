@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import Snowman from "./Snowman";
 import randomWords from "../services/randomWords.js";
-// import Keyboard from 'react-simple-keyboard';
-// import "react-simple-keyboard/build/css/index.css";
 import Snowflakes from "../assets/effects/snowflakes.jsx"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSnowflake } from '@fortawesome/free-solid-svg-icons'
-// import useSound from 'use-sound';
-// import click from "../assets/audio/click.mp3";
 import MyKeyboard from "./Keyboard"
-
+import Sounder from "./Sounder"
 export default class Game extends Component {
     constructor() {
         super();
@@ -20,11 +16,10 @@ export default class Game extends Component {
             word: randomWords(),
             input: "",
             lettersGuessed: [],
-            lettersLeft: [],
             renderedWord: [],
             image: 1,
             snow: true,
-            newgame: false
+            keySound: true
         })
     }
 
@@ -40,26 +35,6 @@ export default class Game extends Component {
         this.initialRender();
     }
 
-    updateInput = (e) => {
-        e.preventDefault();
-        const input = (this.state.image < 6) ? e.target.value : "";
-        this.setState({ input })
-    }
-
-
-    handleSubmit = (e) => {
-        if (e) e.preventDefault();
-        let lettersGuessed = this.state.lettersGuessed;
-        if (lettersGuessed.indexOf(this.state.input) === -1 && this.state.image != 6) {
-            lettersGuessed.push(this.state.input);
-        }
-        else {
-            this.setState({ input: "" });
-            return;
-        }
-        this.setState({ renderedWord: this.renderWord(this.state.input), lettersGuessed: lettersGuessed, input: '' })
-    }
-
     renderWord = (letter) => {
         let indices = [];
         let word = this.state.word.split('');
@@ -70,21 +45,33 @@ export default class Game extends Component {
             idx = word.indexOf(letter, idx + 1);
         }
         let renderedWord = this.state.renderedWord;
+        if(renderedWord.indexOf(" _ ")===-1) this.setState({keySound:false});
         indices.forEach(idx => { renderedWord[idx] = ` ${letter} ` })
         return renderedWord;
+        
     }
 
+    
+    onKeyPress = (letter) => {
+        if(this.state.renderedWord.indexOf(" _ ")!==-1){
+            const input = (this.state.image < 6) ? letter.toLowerCase() : "";
+            let lettersGuessed = this.state.lettersGuessed;
+            if (lettersGuessed.indexOf(input) === -1 && this.state.image != 6)
+            lettersGuessed.push(input);
+            else
+                return;
+            this.setState({ renderedWord: this.renderWord(input), lettersGuessed: lettersGuessed})
+        }
+        else this.forceUpdate(this.setState({keySound:false}));
+        
+        console.log(this.state.renderedWord);
+        
+    }
+    
     handleNewGame = (e) => {
         this.setState(this.initialState(), () => {
             this.initialRender();
         })
-    }
-
-    onKeyPress = (button) => {
-        console.log("Button pressed", button);
-        const input = (this.state.image < 6) ? button.toLowerCase() : "";
-        this.setState({ input })
-        this.handleSubmit();
     }
 
     handleSnowEffect = () =>{
@@ -92,20 +79,22 @@ export default class Game extends Component {
         this.setState({snow});
     }
 
-    allowSound = () =>{
-        if(this.state.image===6) return true;
-        else return false;
-    }
-
     render() {
-        let usedLetters;
-        if (this.state.lettersGuessed.length > 0)
-            usedLetters = this.state.lettersGuessed.join(' ').toUpperCase();
-        console.log(usedLetters);
         console.log(this.state.word);
+        
+        const playSound = () =>{
+            let win = (this.state.renderedWord.indexOf(" _ ") === -1)?true:false;
+            if(win) {
+                win=false;
+                return <Sounder toPlay={"win"} />
+            }
+        }
         return (
             <>
                 {this.state.snow===true?<Snowflakes />: ''}
+                {/* {(this.state.renderedWord.indexOf(" _ ") === -1)?<Sounder toPlay={"win"} />:''} */}
+                {/* <Sounder toPlay={"win"} /> */}
+                {playSound()}
                 <div className="title">
                     {this.state.image===6?<h1>Game Over</h1>:<h1>M E  L  T  M  A  N</h1>}
                 </div>
@@ -116,22 +105,13 @@ export default class Game extends Component {
                     {this.state.renderedWord}
                 </div>
                 <div className="lettersGuessed">
-                    {this.state.lettersGuessed}
-                </div>
-                <div className="form">
-                    <form onSubmit={this.handleSubmit}>
-                        <input className="input" type="text" maxLength="1" value={this.state.input} onChange={this.updateInput}>
-
-                        </input>
-                        <br></br>
-                    </form>
+                    {this.state.lettersGuessed.join(' ')}
                 </div>
                 <div className="keyboard-container">
-                    <MyKeyboard onKeyPress={this.onKeyPress} usedLetters={usedLetters} image={this.state.image}/>
+                    <MyKeyboard onKeyPress={this.onKeyPress} usedLetters={this.state.lettersGuessed} image={this.state.image} clickable={this.state.keySound}/>
                 </div>
                 <div className="newgame-button-container">
                     <button className="newgame-button" onClick={this.handleNewGame}>New Game</button>
-                    {/* <button className="options-button" onClick={this.handleOptions}>Options</button> */}
                     <FontAwesomeIcon icon={faSnowflake} size="3x" onClick={this.handleSnowEffect} className="clickable"/>
                 </div>
             </>

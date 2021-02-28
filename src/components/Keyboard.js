@@ -4,6 +4,7 @@ import "react-simple-keyboard/build/css/index.css";
 import useSound from 'use-sound';
 import click from "../assets/audio/click.mp3";
 import gameover from "../assets/audio/gameover.mp3";
+import win from "../assets/audio/win.mp3";
 
 export default function MyKeyboard(props) {
 
@@ -22,14 +23,25 @@ export default function MyKeyboard(props) {
             }
         }
     );
+    const [playWin] = useSound(
+        win,
+        {
+            volume: 1,
+            onplay: () => {
+                setPlayed(true)
+            }
+        }
+    )
 
-    let handleSound = () =>{
-        if(played==true && props.image===1) setPlayed(false);
+    let handleSound = () => {
+        if (played == true && props.image === 1) setPlayed(false);
 
-        if(props.image<=5)
-             return playActive;
-        else if(props.image===6 && played==false) 
-            return playGameOver;
+        if (props.image <= 5 && props.clickable === true)
+            return playActive;
+        // else if ( (props.image>0 && props.image<6) && played == false)
+        //     return playWin;
+        // else if (props.image === 6 && played == false)
+        //     return playGameOver;
         else return;
 
     }
@@ -56,7 +68,7 @@ export default function MyKeyboard(props) {
                 buttonTheme={[
                     {
                         class: "usedLetter",
-                        buttons: props.usedLetters,
+                        buttons: props.usedLetters.join(' ').toUpperCase(),
                     }
                 ]}
             />
