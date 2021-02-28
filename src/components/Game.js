@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSnowflake } from '@fortawesome/free-solid-svg-icons'
 import MyKeyboard from "./Keyboard"
 import Sounder from "./Sounder"
+
 export default class Game extends Component {
     constructor() {
         super();
@@ -81,19 +82,15 @@ export default class Game extends Component {
 
     render() {
         console.log(this.state.word);
-        
         const playSound = () =>{
-            let win = (this.state.renderedWord.indexOf(" _ ") === -1)?true:false;
-            if(win) {
-                win=false;
+            if((this.state.renderedWord.indexOf(" _ ") === -1))
                 return <Sounder toPlay={"win"} />
-            }
+            else if((this.state.image==6))
+                return <Sounder toPlay={"lose"} />
         }
         return (
             <>
                 {this.state.snow===true?<Snowflakes />: ''}
-                {/* {(this.state.renderedWord.indexOf(" _ ") === -1)?<Sounder toPlay={"win"} />:''} */}
-                {/* <Sounder toPlay={"win"} /> */}
                 {playSound()}
                 <div className="title">
                     {this.state.image===6?<h1>Game Over</h1>:<h1>M E  L  T  M  A  N</h1>}
