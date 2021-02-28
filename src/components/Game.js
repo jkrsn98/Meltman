@@ -50,8 +50,8 @@ export default class Game extends Component {
         let indices = [];
         let word = this.state.word.split('');
         let idx = word.indexOf(letter);
-        if (idx == -1) this.setState({ image: this.state.image + 1 })
-        while (idx != -1) {
+        if (idx === -1) this.setState({ image: this.state.image + 1 })
+        while (idx !== -1) {
             indices.push(idx);
             idx = word.indexOf(letter, idx + 1);
         }
@@ -67,7 +67,7 @@ export default class Game extends Component {
         if (this.state.renderedWord.indexOf(" _ ") !== -1) {
             const input = (this.state.image < 6) ? letter.toLowerCase() : "";
             let lettersGuessed = this.state.lettersGuessed;
-            if (lettersGuessed.indexOf(input) === -1 && this.state.image != 6)
+            if (lettersGuessed.indexOf(input) === -1 && this.state.image !== 6)
                 lettersGuessed.push(input);
             else
                 return;
@@ -98,7 +98,7 @@ export default class Game extends Component {
         const playSound = () => {
             if ((this.state.renderedWord.indexOf(" _ ") === -1))
                 return <Sounder toPlay={"win"} sound={this.state.sound} />
-            else if ((this.state.image == 6))
+            else if ((this.state.image === 6))
                 return <Sounder toPlay={"lose"} sound={this.state.sound} />
         }
         return (
@@ -125,7 +125,7 @@ export default class Game extends Component {
                 </div>
                 <div className="effect-button-container">
                     {this.state.snow === true ? <FontAwesomeIcon icon={faSnowflake} size="3x" onClick={this.handleSnowEffect} className="clickable" /> : <FontAwesomeIcon icon={faCircle} size="3x" onClick={this.handleSnowEffect} className="clickable" />}
-                    {this.state.sound == true ? <FontAwesomeIcon icon={faVolumeUp} size="3x" onClick={this.handleSound} className="clickable" /> : <FontAwesomeIcon icon={faVolumeMute} size="3x" onClick={this.handleSound} className="clickable" />}
+                    {this.state.sound === true ? <FontAwesomeIcon icon={faVolumeUp} size="3x" onClick={this.handleSound} className="clickable" /> : <FontAwesomeIcon icon={faVolumeMute} size="3x" onClick={this.handleSound} className="clickable" />}
                 </div>
 
             </>

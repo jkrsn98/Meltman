@@ -3,8 +3,6 @@ import Keyboard from 'react-simple-keyboard';
 import "react-simple-keyboard/build/css/index.css";
 import useSound from 'use-sound';
 import click from "../assets/audio/click.mp3";
-import gameover from "../assets/audio/gameover.mp3";
-import win from "../assets/audio/win.mp3";
 
 export default function MyKeyboard(props) {
 
@@ -14,28 +12,10 @@ export default function MyKeyboard(props) {
         click,
         { volume: 1 }
     );
-    const [playGameOver] = useSound(
-        gameover,
-        {
-            volume: 1,
-            onplay: () => {
-                setPlayed(true);
-            }
-        }
-    );
-    const [playWin] = useSound(
-        win,
-        {
-            volume: 1,
-            onplay: () => {
-                setPlayed(true)
-            }
-        }
-    )
 
     let handleSound = () => {
-        if(props.sound==true){
-            if (played == true && props.image === 1) setPlayed(false);
+        if(props.sound===true){
+            if (played === true && props.image === 1) setPlayed(false);
 
             if (props.image <= 5 && props.clickable === true)
                 return playActive;

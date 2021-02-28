@@ -8,8 +8,8 @@ export default function Sounder(props) {
     const [played, setPlayed] = React.useState(false);
 
     const url = () => {
-        if (props.toPlay == "win") return win;
-        if (props.toPlay == "lose") return gameover;
+        if (props.toPlay === "win") return win;
+        if (props.toPlay === "lose") return gameover;
     }
 
     const handleSongFinishedPlaying = () => {
